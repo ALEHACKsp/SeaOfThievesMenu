@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="framework">
+      <UniqueIdentifier>{e61bac5c-7cf9-4ff5-bd97-82aff2aeac9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gui">
+      <UniqueIdentifier>{4f6bd1d9-77e8-4b85-acba-9b47d7857beb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hooks">
+      <UniqueIdentifier>{5c38c929-5e89-4cdd-a383-e957b1a67e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes">
+      <UniqueIdentifier>{6a1da9b2-5e4f-4068-9276-98c07d478ef5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes\detours">
+      <UniqueIdentifier>{a164dcdb-2893-482c-85eb-1748f3d73278}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes\imgui">
+      <UniqueIdentifier>{c0da5ff5-e9e3-464c-b00f-516d40608cca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK">
+      <UniqueIdentifier>{866faeed-52fc-4534-b7d5-65584f085a8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="users">
+      <UniqueIdentifier>{c91ba9d8-e6cd-40d3-a236-9ef9b0b9bc61}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework\pch-sdk.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\RenderCmd.hpp">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\Renderer.hpp">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\theme.hpp">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\gui-helpers.hpp">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\menu.hpp">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\DirectX.h">
+      <Filter>hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\SignatureScan.hpp">
+      <Filter>hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\_hooks.h">
+      <Filter>hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\detours\detours.h">
+      <Filter>includes\detours</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\imgui\imgui_impl_dx11.h">
+      <Filter>includes\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\imgui\imgui_impl_win32.h">
+      <Filter>includes\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\imgui\imgui_internal.h">
+      <Filter>includes\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\imgui\imstb_rectpack.h">
+      <Filter>includes\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\imgui\imstb_textedit.h">
+      <Filter>includes\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\imgui\imstb_truetype.h">
+      <Filter>includes\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\imgui\imconfig.h">
+      <Filter>includes\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\imgui\imgui.h">
+      <Filter>includes\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\directx11.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\json.hpp">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\stb_image.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\xorstr.hpp">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\crc32.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_Basic.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="user\logger.h">
+      <Filter>users</Filter>
+    </ClInclude>
+    <ClInclude Include="user\main.h">
+      <Filter>users</Filter>
+    </ClInclude>
+    <ClInclude Include="user\state.hpp">
+      <Filter>users</Filter>
+    </ClInclude>
+    <ClInclude Include="user\utility.h">
+      <Filter>users</Filter>
+    </ClInclude>
+    <ClInclude Include="user\keybinds.h">
+      <Filter>users</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_CoreUObject_structs.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_CoreUObject_classes.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_CoreUObject_enums.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_Engine_classes.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_Engine_enums.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_Engine_structs.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_SlateCore_structs.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_SlateCore_classes.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_SlateCore_enums.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_InputCore_structs.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_InputCore_classes.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_InputCore_enums.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_Slate_structs.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_Slate_classes.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\SoT_Slate_enums.hpp">
+      <Filter>SDK</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="framework\dllmain.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\pch-sdk.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\Renderer.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\theme.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\gui-helpers.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\menu.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\RenderCmd.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="hooks\DirectX.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="hooks\_hooks.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\detours\disasm.cpp">
+      <Filter>includes\detours</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\detours\modules.cpp">
+      <Filter>includes\detours</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\detours\detours.cpp">
+      <Filter>includes\detours</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\imgui\imgui_impl_dx11.cpp">
+      <Filter>includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\imgui\imgui_impl_win32.cpp">
+      <Filter>includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\imgui\imgui_widgets.cpp">
+      <Filter>includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\imgui\imgui.cpp">
+      <Filter>includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\imgui\imgui_draw.cpp">
+      <Filter>includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\crc32.cpp">
+      <Filter>includes</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\directx11.cpp">
+      <Filter>includes</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\SoT_Basic.cpp">
+      <Filter>SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="user\main.cpp">
+      <Filter>users</Filter>
+    </ClCompile>
+    <ClCompile Include="user\state.cpp">
+      <Filter>users</Filter>
+    </ClCompile>
+    <ClCompile Include="user\utility.cpp">
+      <Filter>users</Filter>
+    </ClCompile>
+    <ClCompile Include="user\keybinds.cpp">
+      <Filter>users</Filter>
+    </ClCompile>
+    <ClCompile Include="user\logger.cpp">
+      <Filter>users</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\SoT_CoreUObject_functions.cpp">
+      <Filter>SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\SoT_Engine_functions.cpp">
+      <Filter>SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\SoT_SlateCore_functions.cpp">
+      <Filter>SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\SoT_InputCore_functions.cpp">
+      <Filter>SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\SoT_Slate_functions.cpp">
+      <Filter>SDK</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
