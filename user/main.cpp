@@ -14,12 +14,8 @@ HANDLE hUnloadEvent;
 #define stringify(s) #s
 
 void Run(LPVOID lpParam) {
-	AllocConsole();
-	freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
-	std::cout << "its working";
-
-	//Log.Create();
-
+	Log.Create();
+	Log.Debug("its working?");
 	//hModule = (HMODULE)lpParam;
 
 	//std::ostringstream ss;

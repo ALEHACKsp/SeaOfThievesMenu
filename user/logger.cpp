@@ -8,13 +8,13 @@ Logger Log;
 
 void Logger::Create()
 {
-	auto path = getModulePath(NULL);
-	auto logPath = path.parent_path() / "sotm-log.txt";
-	if (std::filesystem::exists(logPath)) {
-		std::filesystem::remove(logPath);
-	}
-
-	this->filePath = logPath;
+	this->logPipe = CreateFile(TEXT("\\\\.\\pipe\\SotMenuLogPipe"),
+		GENERIC_READ | GENERIC_WRITE,
+		0,
+		NULL,
+		OPEN_EXISTING,
+		0,
+		NULL);
 }
 
 void Logger::Write(std::string verbosity, std::string source, std::string message)
@@ -23,9 +23,14 @@ void Logger::Write(std::string verbosity, std::string source, std::string messag
 	ss << "[" << verbosity << " - " << source << "] " << message << std::endl;
 	std::cout << ss.str();
 
-	std::ofstream file(this->filePath, std::ios_base::app);
-	file << ss.str();
-	file.close();
+	if (this->logPipe != INVALID_HANDLE_VALUE)
+	{
+		WriteFile(this->logPipe,
+			ss.str().c_str(),
+			ss.str().length() + 1,   // = length of string + terminating '\0' !!!
+			&dwWritten,
+			NULL);
+	}
 }
 
 void Logger::Debug(std::string source, std::string message)
@@ -56,4 +61,8 @@ void Logger::Error(std::string message)
 void Logger::Info(std::string message)
 {
 	Info("SOTM", message);
+}
+
+void Logger::Close() {
+	CloseHandle(this->logPipe);
 }

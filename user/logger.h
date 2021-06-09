@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 #include <string>
 #include <filesystem>
 #include <fstream>
@@ -15,11 +16,14 @@ public:
 	void Debug(std::string message);
 	void Error(std::string message);
 	void Info(std::string message);
+
+	void Close();
 private:
-	std::filesystem::path filePath;
+	HANDLE logPipe;
+	DWORD dwWritten;
 	std::string currentVerbosity;
 };
-#define _log_source (std::string() + "AUM - " + __func__)
+#define _log_source (std::string() + "SOTM - " + __func__)
 
 #define LOG_INFO(x) Log.Info(_log_source, x);
 #define LOG_DEBUG(x) Log.Debug(_log_source, x);
