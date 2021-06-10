@@ -1,19 +1,20 @@
 #include <iostream>
 #include <Windows.h>
+#include "comm.h"
 
 int main()
 {
     char buffer[1024]{};
     DWORD dwRead;
 
-    HANDLE logPipe = CreateNamedPipe(TEXT("\\\\.\\pipe\\SotMenuLogPipe"),
-        PIPE_ACCESS_DUPLEX,
-        PIPE_TYPE_BYTE | PIPE_READMODE_BYTE | PIPE_WAIT,
-        1,
-        1024 * 16,
-        1024 * 16,
-        NMPWAIT_USE_DEFAULT_WAIT,
-        NULL);
+    const DWORD pid = GetProcessIdByName("SoTGame.exe");
+
+    std::cout << "Sea of Thieves PID: " << pid << "\n";
+
+    HANDLE logPipe;
+    if (CreatePipeFromPid(&logPipe, L"SotMenuLogPipe", pid) != NOERROR) {
+        std::cout << "Something went wrong";
+    }
 
     while (logPipe != INVALID_HANDLE_VALUE)
     {
