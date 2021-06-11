@@ -231,6 +231,10 @@
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
     </Link>
+    <PostBuildEvent>
+      <Command>icacls.exe $(TargetDir)$(TargetFileName) /grant *S-1-15-2-1:(GR,GE)</Command>
+      <Message>Set correct permissions so dll can be injected</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

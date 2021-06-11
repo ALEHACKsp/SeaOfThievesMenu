@@ -8,12 +8,10 @@ Logger Log;
 
 void Logger::Create()
 {
-	this->logPipe = CreateFile(TEXT("\\\\.\\pipe\\SotMenuLogPipe"),
-		GENERIC_READ | GENERIC_WRITE,
+	this->logPipe = CreateFile2(TEXT("\\\\.\\pipe\\local\\SotMenuLogPipe"),
+		GENERIC_WRITE,
 		0,
-		NULL,
 		OPEN_EXISTING,
-		0,
 		NULL);
 }
 
