@@ -190,7 +190,7 @@ BOOL CreateAndConnectInstance(LPOVERLAPPED lpoOverlap)
     DWORD pid = utils::GetPIDFromName(TARGET_PROCESS_NAME);
     std::cout << "Sea of Thieves PID: " << pid << "\n";
     DWORD errCode = 0;
-    BOOL success = CreatePipeforUWP(L"SotMenuLogPipe", pid, &hPipe, &errCode);
+    BOOL success = CreatePipeWithProperACL(L"SotMenuLogPipe", pid, &hPipe, &errCode);
     if ((success == FALSE) || (hPipe == INVALID_HANDLE_VALUE))
     {
         std::cout << "CreateNamedPipe failed with " << GetLastError() << std::endl;
