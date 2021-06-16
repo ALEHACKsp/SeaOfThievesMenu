@@ -1,0 +1,143 @@
+name: Build Project
+
+on:
+  push:
+    tags: 
+      - v[0-9].[0-9]+.[0-9]+*
+  # pr's will trigger this action. i think the idea here is to verify that a build is passing before merging.
+  pull_request:
+    branches: 
+      - main
+  
+jobs:
+  Build_Release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      
+      - name: Build Menu Release
+        shell: bash
+        run: '"/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" -property:Configuration=Release -property:Platform=x64 SoTMenu.vcxproj'
+
+      - name: Build Logger Release
+        shell: bash
+        run: '"/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" -property:Configuration=Release -property:Platform=x64 SotMenuLog/SotMenuLog.vcxproj'
+
+      - name: Build Launcher Release
+        shell: bash
+        run: '"/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" -property:Configuration=Release -property:Platform=x64'
+
+      - name: Package Release Builds
+        if: ${{ github.event_name == 'push' }}
+        shell: cmd
+        run: |
+          move /y LICENSE Release\LICENSE
+          cd Release
+          tar -caf Release.zip SoTMLauncher LICENSE
+
+      - name: Package Release Builds
+        if: ${{ github.event_name == 'push' }}
+        
+      - name: Upload Release Artifact
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/upload-artifact@v2.2.3
+        with:
+          name: Release
+          path: Release.zip
+          
+  Build_Debug:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      
+      - name: Build Debug
+        shell: bash
+        run: '"/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" -property:Configuration=Debug'
+        
+      - name: Build Debug_Version
+        shell: bash
+        run: '"/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" -property:Configuration=Debug_Version'
+
+      - name: Package Debug Builds
+        if: ${{ github.event_name == 'push' }}
+        shell: cmd
+        run: |
+          move /y LICENSE Debug\LICENSE
+          cd Debug
+          tar -caf Debug.zip SoTMLauncher LICENSE
+        
+      - name: Upload Debug Artifact
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/upload-artifact@v2.2.3
+        with:
+          name: Debug
+          path: Debug.zip
+          
+  AutoRelease:
+    if: ${{ github.event_name == 'push' }}
+    runs-on: windows-latest
+    needs: [Build_Release, Build_Debug]
+    steps:
+      - name: Parse tag semver
+        uses: booxmedialtd/ws-action-parse-semver@3576f3a20a39f8752fe0d8195f5ed384090285dc
+        id: semver_parser
+        with:
+          input_string: ${{ github.ref }}
+          version_extractor_regex: '\/v(.*)$'
+          
+      # please keep this for an adjustment period, will help diagnose any issues
+      - name: Debug semver
+        run: |
+            echo 'major: ${{ steps.semver_parser.outputs.major }}'
+            echo 'minor: ${{ steps.semver_parser.outputs.minor }}'
+            echo 'patch: ${{ steps.semver_parser.outputs.patch }}'
+            echo 'feature (is pre-release?): ${{ steps.semver_parser.outputs.prerelease }}'
+            echo 'feature ver: ${{ steps.semver_parser.outputs.build }}'
+            echo 'full: ${{ steps.semver_parser.outputs.fullversion }}'
+            echo 'is pre-release: ${{ steps.semver_parser.outputs.prerelease != 0 }}'
+      
+      - name: Download Release Artifact
+        uses: actions/download-artifact@v2.0.9
+        with:
+          name: Release
+      
+      - name: Download Debug Artifact
+        uses: actions/download-artifact@v2.0.9
+        with:
+          name: Debug
+      
+      - name: Automatic Releases
+        if: ${{ github.event_name == 'push' }}
+        uses: marvinpinto/action-automatic-releases@526ce12c6675bbe6e0e9a4169c90d09a3f7ad3e2
+        id: "automatic_releases"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: ${{ steps.semver_parser.outputs.prerelease != 0 }}
+          files: |
+            Release.zip
+            Debug.zip
+  
+  Notification:
+    if: ${{ github.event_name == 'push' && github.repository == 'BitCrackers/SeaOfThievesMenu' }}
+    runs-on: ubuntu-latest
+    needs: [AutoRelease]
+    steps:
+      - name: Parse tag into env
+        # credit: mcraiha via [https://github.community/t/how-to-get-just-the-tag-name/16241/17]
+        id: get_tag
+        shell: bash
+        run: echo ::set-output name=THIS_TAG::${GITHUB_REF/refs\/tags\//}
+        
+      - name: Debug tag parsing
+        run: echo '${{ steps.get_tag.outputs.THIS_TAG }}'
+        
+      - name: Discord Notification
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        with:
+          severity: info
+          description: "Project Build"
+          # note: we could also link directly to the asset, but that might not be very user-friendly
+          details: "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ steps.get_tag.outputs.THIS_TAG }}"
+          webhookUrl: ${{ secrets.DISCORD_BUILD_WEBHOOK }}

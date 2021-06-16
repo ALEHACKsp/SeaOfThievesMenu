@@ -3,7 +3,7 @@
 // source for almost this entire file:
 // https://docs.microsoft.com/en-us/windows/win32/ipc/named-pipe-server-using-completion-routines
 
-#define TARGET_PROCESS_NAME L"UWP_Testbed_CPP.exe"
+#define TARGET_PROCESS_NAME L"SotGame.exe"
 
 HANDLE hPipe;
 
