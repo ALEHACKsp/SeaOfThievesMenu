@@ -43,39 +43,10 @@ jobs:
           name: Release
           path: Release.zip
           
-  Build_Debug:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2.3.4
-      
-      - name: Build Debug
-        shell: bash
-        run: '"/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" -property:Configuration=Debug'
-        
-      - name: Build Debug_Version
-        shell: bash
-        run: '"/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" -property:Configuration=Debug_Version'
-
-      - name: Package Debug Builds
-        if: ${{ github.event_name == 'push' }}
-        shell: cmd
-        run: |
-          move /y LICENSE Debug\LICENSE
-          cd Debug
-          tar -caf Debug.zip SoTMLauncher LICENSE
-        
-      - name: Upload Debug Artifact
-        if: ${{ github.event_name == 'push' }}
-        uses: actions/upload-artifact@v2.2.3
-        with:
-          name: Debug
-          path: Debug.zip
-          
   AutoRelease:
     if: ${{ github.event_name == 'push' }}
     runs-on: windows-latest
-    needs: [Build_Release, Build_Debug]
+    needs: [Build_Release]
     steps:
       - name: Parse tag semver
         uses: booxmedialtd/ws-action-parse-semver@3576f3a20a39f8752fe0d8195f5ed384090285dc
@@ -100,11 +71,6 @@ jobs:
         with:
           name: Release
       
-      - name: Download Debug Artifact
-        uses: actions/download-artifact@v2.0.9
-        with:
-          name: Debug
-      
       - name: Automatic Releases
         if: ${{ github.event_name == 'push' }}
         uses: marvinpinto/action-automatic-releases@526ce12c6675bbe6e0e9a4169c90d09a3f7ad3e2
@@ -114,7 +80,6 @@ jobs:
           prerelease: ${{ steps.semver_parser.outputs.prerelease != 0 }}
           files: |
             Release.zip
-            Debug.zip
   
   Notification:
     if: ${{ github.event_name == 'push' && github.repository == 'BitCrackers/SeaOfThievesMenu' }}
