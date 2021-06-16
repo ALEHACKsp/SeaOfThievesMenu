@@ -16,6 +16,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
       
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1
+    
+      - name: Setup NuGet.exe for use with actions
+        uses: NuGet/setup-nuget@v1.0.5
+      
+      - name: Restore NuGet Packages
+        run: nuget restore SoTMenu.sln
+
       - name: Build Menu Release
         shell: bash
         run: '"/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" -property:Configuration=Release -property:Platform=x64 SoTMenu.vcxproj'
