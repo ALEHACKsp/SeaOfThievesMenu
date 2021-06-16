@@ -35,9 +35,6 @@ jobs:
           move /y LICENSE Release\LICENSE
           cd Release
           tar -caf Release.zip SoTMLauncher LICENSE
-
-      - name: Package Release Builds
-        if: ${{ github.event_name == 'push' }}
         
       - name: Upload Release Artifact
         if: ${{ github.event_name == 'push' }}
